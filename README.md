@@ -4,8 +4,6 @@
 
 GigFlow is a mini-freelance marketplace platform. The goal is to build a system where Clients can post jobs (Gigs) and Freelancers can apply for them (Bids). This assignment tests your ability to handle complex database relationships, secure authentication, and state management.
 
-**Estimated Time:** 2 - 3 Days.  
-**Submission:** GitHub Repository link + Hosted Link.
 
 ## Technical Stack
 
@@ -103,12 +101,5 @@ Implement the "Hire" logic using MongoDB Transactions or a highly secure logic f
 ### Bonus 2: Real-time Updates
 Integrate Socket.io. When a Client hires a Freelancer, the Freelancer should receive an instant, real-time notification in their dashboard saying, "You have been hired for [Project Name]!" without having to refresh their page.
 
-## Submission Guidelines
 
-1. **Code:** GitHub Repository Link (with complete source code) README.md.
-2. **Environment:** Include a .env.example file so we know which keys to set up.
-3. **Video/Demo:** A 2-minute Loom video walking through the "Hiring" flow.
 
-## Email Submission Details
-- **To:** ritik.yadav@servicehive.tech
-- **CC:** hiring@servicehive.tech
