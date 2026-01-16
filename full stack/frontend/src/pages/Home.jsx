@@ -5,7 +5,7 @@ import { socket } from '../store';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
-  const { gigs, isLoading } = useSelector((state) => state.gigs);
+  const { gigs, isLoading, error } = useSelector((state) => state.gigs);
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -15,13 +15,15 @@ const Home = () => {
 
   useEffect(() => {
     // Listen for new gigs in real-time
-    socket.on('newGig', (newGig) => {
-      dispatch(addNewGig(newGig));
-    });
+    if (socket) {
+      socket.on('newGig', (newGig) => {
+        dispatch(addNewGig(newGig));
+      });
 
-    return () => {
-      socket.off('newGig');
-    };
+      return () => {
+        socket.off('newGig');
+      };
+    }
   }, [dispatch]);
 
   const handleSearch = (e) => {
@@ -53,6 +55,12 @@ const Home = () => {
           </div>
         </form>
       </div>
+
+      {error && (
+        <div className="text-center text-red-500 mb-4">
+          Error loading gigs: {error}
+        </div>
+      )}
 
       {isLoading ? (
         <div className="text-center">Loading gigs...</div>
@@ -92,7 +100,7 @@ const Home = () => {
         </div>
       )}
 
-      {gigs.length === 0 && !isLoading && (
+      {gigs.length === 0 && !isLoading && !error && (
         <div className="text-center text-gray-500">
           No gigs found. <Link to="/create-gig" className="text-blue-600 hover:underline">Post the first one!</Link>
         </div>

@@ -50,6 +50,9 @@ router.post('/', auth, async (req, res) => {
     await bid.save();
     await bid.populate('freelancerId', 'name email');
 
+    // Emit real-time event for new bid
+    io.emit('newBid', bid);
+
     res.status(201).json(bid);
   } catch (error) {
     res.status(500).json({ message: 'Server error' });

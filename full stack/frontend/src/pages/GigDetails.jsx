@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import { fetchGigDetails, fetchGigBids, placeBid, hireFreelancer, updateGig, deleteGig } from '../features/gigsSlice';
+import { fetchGigDetails, fetchGigBids, placeBid, hireFreelancer, updateGig, deleteGig, addNewBid } from '../features/gigsSlice';
+import { socket } from '../store';
 
 const GigDetails = () => {
   const { id } = useParams();
@@ -34,6 +35,21 @@ const GigDetails = () => {
       dispatch(fetchGigBids(id));
     }
   }, [dispatch, currentGig, user, id]);
+
+  useEffect(() => {
+    // Listen for new bids on this gig
+    if (socket) {
+      socket.on('newBid', (newBid) => {
+        if (newBid.gigId === id) {
+          dispatch(addNewBid(newBid));
+        }
+      });
+
+      return () => {
+        socket.off('newBid');
+      };
+    }
+  }, [dispatch, id]);
 
   const handleBidSubmit = (e) => {
     e.preventDefault();

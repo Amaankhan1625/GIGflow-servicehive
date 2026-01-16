@@ -167,6 +167,9 @@ const gigsSlice = createSlice({
     addNewGig: (state, action) => {
       state.gigs.unshift(action.payload);
     },
+    addNewBid: (state, action) => {
+      state.gigBids.unshift(action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -321,5 +324,5 @@ const gigsSlice = createSlice({
   },
 });
 
-export const { clearError, addNewGig } = gigsSlice.actions;
+export const { clearError, addNewGig, addNewBid } = gigsSlice.actions;
 export default gigsSlice.reducer;

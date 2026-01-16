@@ -26,8 +26,16 @@ const Dashboard = () => {
       }
     });
 
+    // Listen for new bids placed by the user
+    socket.on('newBid', (newBid) => {
+      if (newBid.freelancerId._id === user.id) {
+        dispatch(fetchUserBids()); // Refresh user bids
+      }
+    });
+
     return () => {
       socket.off('freelancerHired');
+      socket.off('newBid');
     };
   }, [user, dispatch, navigate]);
 
